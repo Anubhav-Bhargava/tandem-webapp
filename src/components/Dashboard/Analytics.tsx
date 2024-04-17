@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import ChartFour from "../Charts/ChartFour";
@@ -11,13 +11,27 @@ import TableTwo from "../Tables/TableTwo";
 
 // without this the component renders on server and throws an error
 import dynamic from "next/dynamic";
+import DataStatsAnalytics from "../DataStats/DataStatsAnalytics";
+import UtilizationChart from "../Charts/UtilizationChart";
+import ChartSix from "../Charts/ChartSix";
+import DowntimeChart from "../Charts/DowntimeChart";
+import FuelEfficiencyChart from "../Charts/FuelEfficiencyChart";
+import IdleTimeChart from "../Charts/IdleTimeChart";
+import OverTimeChart from "../Charts/OverTimeChart";
+import DataTableOne from "../DataTables/DataTableOne";
+import DataTableAnalytics from "../DataTables/DataTableAnalytics";
 
 const MapTwo = dynamic(() => import("../Maps/MapTwo"), {
   ssr: false,
 });
 
 const Analytics: React.FC = () => {
-  
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
   return (
     <>
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
@@ -60,7 +74,30 @@ const Analytics: React.FC = () => {
             </span>
           </div>
         </div>
-        <ChartFour />
+        <div className="col-span-12">
+          <DataStatsAnalytics />
+        </div>
+        <div className="col-span-12 xl:col-span-6">
+          <UtilizationChart />
+        </div>
+        <div className="col-span-12 xl:col-span-6">
+          <DowntimeChart />
+        </div>
+        <div className="col-span-12 xl:col-span-6">
+          <FuelEfficiencyChart />
+        </div>
+        <div className="col-span-12 xl:col-span-6">
+          <IdleTimeChart />
+        </div>
+        <div className="col-span-12 xl:col-span-6">
+          <OverTimeChart />
+        </div>
+
+        <div className="col-span-12 rounded-sm border mt-4 border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <DataTableAnalytics />
+        </div>
+
+
         <DataStats />
         <MapTwo />
         <div className="col-span-12 xl:col-span-6">
